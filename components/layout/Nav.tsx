@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
+import { useScrollDirection } from '@/lib/hooks/useScrollDirection';
 
 const links = [
   { label: 'Bulletin', href: '#bulletin', id: 'bulletin' },
@@ -14,15 +15,10 @@ const links = [
 ];
 
 export function Nav() {
-  const [scrolled, setScrolled] = useState(false);
+  // Shared scroll state — the AnnounceBar consumes the same hook so both
+  // pieces of top chrome slide as a single masthead unit.
+  const { hidden, scrolled } = useScrollDirection(80);
   const [activeId, setActiveId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   // Active section — whichever link's section is most visible gets the champagne color.
   useEffect(() => {
@@ -58,13 +54,25 @@ export function Nav() {
 
   return (
     <nav
+      // Fixed below the AnnounceBar (which sticks at top-0, ~38px tall).
+      // Z-90 keeps the masthead above the wrapper-relative content; the
+      // AnnounceBar's z-[100] keeps it above the Nav so the Nav slides up
+      // behind the AnnounceBar when hidden.
       className={cn(
-        // top-[38px] sits below the AnnounceBar (which is itself sticky top-0).
-        'sticky top-[38px] z-[90] transition-[background-color,backdrop-filter,box-shadow] duration-300 ease-interactive',
+        'fixed top-[38px] left-0 right-0 z-[90]',
         scrolled
-          ? 'bg-sapphire/85 backdrop-blur-xl shadow-[0_6px_30px_rgba(0,0,0,0.4)]'
-          : 'bg-transparent',
+          ? 'shadow-[0_6px_30px_rgba(0,0,0,0.45)]'
+          : 'shadow-none',
       )}
+      style={{
+        transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
+        // Single combined transition so background + transform feel like one motion.
+        transition:
+          'transform 280ms cubic-bezier(0.4, 0, 0.2, 1), background-color 300ms ease, backdrop-filter 300ms ease',
+        backgroundColor: scrolled ? 'rgba(7, 7, 8, 0.78)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(20px) saturate(120%)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(120%)' : 'none',
+      }}
     >
       <div className="mx-auto flex max-w-[1440px] items-center justify-between px-8 py-7">
         {/* Wordmark — journal-masthead scale. Italic serif at 46px, the unmistakable anchor. */}
@@ -88,8 +96,6 @@ export function Nav() {
                   )}
                 >
                   {link.label}
-                  {/* 1px champagne underline animates in from the left on hover.
-                      Hidden entirely on the active link — color alone signals state. */}
                   {!isActive && (
                     <span
                       aria-hidden
@@ -113,13 +119,13 @@ export function Nav() {
             as="a"
             href="#invitation"
             variant="primary"
-            // Scaled up: 16px vertical / 32px horizontal padding, 17px text — proportional to the new masthead.
             className="!py-4 !px-8 !text-[17px]"
           >
             Request access
           </Button>
         </div>
       </div>
+      {/* Hairline at the bottom of the bar — fades in only when scrolled */}
       <div
         className={cn(
           'absolute inset-x-0 bottom-0 h-[1px] transition-opacity duration-300',

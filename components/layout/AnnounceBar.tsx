@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useScrollDirection } from '@/lib/hooks/useScrollDirection';
 
 const TOTAL_PAGES = 28;
 
@@ -34,9 +35,18 @@ function usePageOfScroll() {
 
 export function AnnounceBar() {
   const page = usePageOfScroll();
+  // Same hook as Nav — guarantees the AnnounceBar and Nav move together.
+  const { hidden } = useScrollDirection(80);
 
   return (
-    <div className="sticky top-0 z-[100] bg-abyssal text-pearl">
+    <div
+      className="sticky top-0 z-[100] bg-abyssal text-pearl"
+      style={{
+        transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
+        // Match the Nav's transition exactly so they slide in lockstep.
+        transition: 'transform 280ms cubic-bezier(0.4, 0, 0.2, 1)',
+      }}
+    >
       <div className="relative mx-auto flex max-w-[1440px] items-center justify-between px-8 py-[10px]">
         <p className="font-mono text-[10.5px] font-medium uppercase tracking-eyebrow text-pearl/75">
           <span aria-hidden className="mr-2 text-champagne">&#10022;</span>

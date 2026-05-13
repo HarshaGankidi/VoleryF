@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sapphire: #0B0B0D;
+  --sapphire-deep: #070708;
+  --obsidian: #16161A;
+  --abyssal: #000000;
+  --pearl: #F0E8D6;
+  --pewter: #B8B5B0;
+  --brushed: #9B9A95;
+  --champagne: #E8DDB8;
+  --olive: #2D3325;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--sapphire);
+  color: var(--pearl);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-feature-settings: 'cv05', 'cv11';
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+::selection {
+  background: var(--champagne);
+  color: var(--sapphire);
+}
+
+button { font-family: inherit; }
+
+/* Hairline dividers, very subtle Pearl over Sapphire */
+.hairline-pearl {
+  background-image: linear-gradient(to right, transparent, rgba(240, 232, 214, 0.18), transparent);
+  height: 1px;
+  width: 100%;
+}
+
+.hairline-brushed {
+  background-image: linear-gradient(to right, transparent, rgba(155, 154, 149, 0.45), transparent);
+  height: 1px;
+  width: 100%;
+}
+
+/* Multi-layer shadow stack for genuine elevation. Use on any card surface. */
+.elevated-card {
+  background: var(--obsidian);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 rgba(240, 232, 214, 0.05),
+    0 0 0 1px rgba(240, 232, 214, 0.06),
+    0 24px 60px rgba(0, 0, 0, 0.65),
+    0 8px 24px rgba(0, 0, 0, 0.50),
+    0 2px 8px rgba(0, 0, 0, 0.40);
+}
+
+/* Frosted glass surface — use sparingly, 3–4 places maximum on the page. */
+.glass-panel {
+  background: rgba(22, 22, 26, 0.62);
+  backdrop-filter: blur(24px) saturate(125%);
+  -webkit-backdrop-filter: blur(24px) saturate(125%);
+  border: 1px solid rgba(240, 232, 214, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(240, 232, 214, 0.06),
+    0 30px 80px rgba(0, 0, 0, 0.7);
+}
+
+/* Brushed-metal hairline for buttons + dividers */
+.brushed-ring {
+  box-shadow:
+    inset 0 1px 0 rgba(240, 232, 214, 0.10),
+    0 0 0 1px rgba(155, 154, 149, 0.30);
+}
+
+/* Subtle film grain — used on Sapphire sections to add paper-like texture */
+.sapphire-grain {
+  position: relative;
+}
+.sapphire-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* Marginalia: italic serif column */
+.marginalia {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-style: italic;
+  color: var(--pewter);
+  line-height: 1.55;
+  font-size: 14px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,28 @@
+  ▲ Next.js 14.2.15
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 1734ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 5.5s (538 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /_next/static/webpack/521915b9a2db82ca.webpack.hot-update.json 404 in 5740ms
+ ○ Compiling /specimens/[id] ...
+ ✓ Compiled / in 4.4s (1283 modules)
+ GET /specimens/single-fund 200 in 4474ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET / 200 in 4168ms
+ GET /_next/static/webpack/521915b9a2db82ca.webpack.hot-update.json 404 in 1150ms
+ GET /specimens/single-fund 200 in 443ms
+ GET / 200 in 85ms
+ GET / 200 in 72ms
+ GET / 200 in 142ms
+ ✓ Compiled in 505ms (1294 modules)
+ ✓ Compiled in 323ms (1294 modules)
+ GET / 200 in 605ms
+ ✓ Compiled in 711ms (1294 modules)
+ GET / 200 in 163ms
+ GET / 200 in 245ms
+ ✓ Compiled in 426ms (1294 modules)
+ GET / 200 in 166ms
+ GET / 200 in 130ms
